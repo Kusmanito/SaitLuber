@@ -21,16 +21,41 @@ document.querySelectorAll('.nav-link').forEach(link => {
     });
 });
 
-// Мобильное меню
+// Исправленный код для мобильного меню
 const menuToggle = document.getElementById('menuToggle');
 const mainNav = document.querySelector('.main-nav');
 
-if (menuToggle) {
-    menuToggle.addEventListener('click', function() {
+if (menuToggle && mainNav) {
+    menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
         mainNav.classList.toggle('active');
         this.innerHTML = mainNav.classList.contains('active') 
             ? '<i class="fas fa-times"></i>' 
             : '<i class="fas fa-bars"></i>';
+        
+        // Закрытие меню при клике вне его
+        if (mainNav.classList.contains('active')) {
+            document.addEventListener('click', closeMenuOnClickOutside);
+        } else {
+            document.removeEventListener('click', closeMenuOnClickOutside);
+        }
+    });
+    
+    function closeMenuOnClickOutside(e) {
+        if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+            mainNav.classList.remove('active');
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            document.removeEventListener('click', closeMenuOnClickOutside);
+        }
+    }
+    
+    // Закрытие меню при клике на ссылку
+    const navLinks = mainNav.querySelectorAll('a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mainNav.classList.remove('active');
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        });
     });
 }
 
@@ -148,6 +173,7 @@ galleryStyles.textContent = `
     .gallery-item:nth-child(3) { animation-delay: 0.3s; }
 `;
 document.head.appendChild(galleryStyles);
+
 // Создание частиц для логотипа
 function createLogoParticles() {
     const logo = document.querySelector('.logo-animated');

@@ -35,9 +35,9 @@ body {
 
 /* Стили для секций */
 .container {
-    max-width: 1200px;
+    max-width: 1400px; /* Увеличили для большего пространства */
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 20px;
 }
 
 .section {
@@ -77,28 +77,32 @@ body {
     line-height: 1.6;
 }
 
-/* Шапка - исправленная версия */
+/* ШАПКА - КОМПАКТНАЯ ВЕРСИЯ */
 header {
     background-color: var(--bg-white);
     box-shadow: var(--shadow-sm);
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding: 10px 0;
+    padding: 8px 0;
 }
 
 .header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 70px; /* Фиксированная минимальная высота */
+    gap: 10px;
+    min-height: 50px;
 }
 
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 16px;
-    max-width: 60%; /* Ограничиваем ширину логотипа */
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+    overflow: visible;
+    max-width: 450px; /* Ограничиваем ширину текста */
 }
 
 .logo-text {
@@ -106,49 +110,53 @@ header {
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    min-width: 0; /* Важно для корректного переноса текста */
+    min-width: 0;
+    overflow: visible;
 }
 
 .logo-text h1 {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--primary-blue);
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     line-height: 1.2;
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
 }
 
 .slogan {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-gray);
-    line-height: 1.3;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1.2;
     white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
 }
 
-/* Навигация */
+/* Навигация - УБРАЛИ ОГРАНИЧЕНИЯ И СДВИНУЛИ ПРАВЕЕ */
 .main-nav {
     flex-shrink: 0;
+    margin-left: 30px; /* Сдвигаем навигацию правее */
 }
 
 .main-nav ul {
     display: flex;
     list-style: none;
-    gap: 8px;
+    gap: 4px;
     margin: 0;
     padding: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .main-nav a {
     color: var(--text-dark);
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.9rem;
-    padding: 8px 12px;
-    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    padding: 5px 6px;
+    border-radius: 4px;
     transition: all 0.2s ease;
     white-space: nowrap;
 }
@@ -162,10 +170,11 @@ header {
     display: none;
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--primary-blue);
     cursor: pointer;
     padding: 5px;
+    flex-shrink: 0;
     margin-left: 10px;
 }
 
@@ -605,83 +614,62 @@ footer {
     opacity: 0.8;
 }
 
-/* Адаптивность - исправленные медиа-запросы */
-@media (max-width: 1024px) {
+/* Адаптивность - УПРОЩЕННАЯ ВЕРСИЯ */
+@media (max-width: 1400px) {
+    .container {
+        max-width: 1200px;
+    }
+    
     .logo-text h1 {
         font-size: 1rem;
     }
     
     .slogan {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .main-nav {
+        display: none;
     }
     
-    .main-nav a {
-        padding: 8px 10px;
-        font-size: 0.85rem;
+    .menu-toggle {
+        display: block;
+    }
+    
+    .logo-container {
+        max-width: calc(100% - 60px);
+    }
+    
+    .logo-text h1 {
+        font-size: 0.95rem;
+    }
+    
+    .slogan {
+        font-size: 0.7rem;
     }
 }
 
 @media (max-width: 900px) {
     .header-content {
         flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 15px;
+        gap: 10px;
     }
     
     .logo-container {
-        max-width: 70%;
+        order: 1;
+        flex: 0 0 auto;
+        width: auto;
+        max-width: calc(100% - 60px);
     }
     
     .main-nav {
         order: 3;
         width: 100%;
         margin-top: 10px;
-    }
-    
-    .main-nav ul {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-}
-
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
-        gap: 15px;
-    }
-    
-    .logo-container {
-        max-width: calc(100% - 60px); /* Учитываем кнопку меню */
-    }
-    
-    .logo-text h1 {
-        font-size: 0.95rem;
-        white-space: normal;
-        line-height: 1.3;
-        max-height: 2.6em;
-        overflow: hidden;
-    }
-    
-    .slogan {
-        font-size: 0.75rem;
-        white-space: normal;
-        line-height: 1.2;
-        max-height: 2.4em;
-        overflow: hidden;
-    }
-    
-    .main-nav {
+        margin-left: 0;
         display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: var(--bg-white);
-        box-shadow: var(--shadow-lg);
-        padding: 20px;
-        z-index: 1000;
     }
     
     .main-nav.active {
@@ -690,20 +678,39 @@ footer {
     
     .main-nav ul {
         flex-direction: column;
-        gap: 15px;
-        align-items: center;
+        gap: 8px;
+        align-items: flex-start;
     }
     
     .main-nav a {
-        padding: 12px 20px;
+        padding: 8px 16px;
         width: 100%;
-        text-align: center;
+        text-align: left;
+        font-size: 0.9rem;
     }
     
     .menu-toggle {
         display: block;
         order: 2;
-        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        min-height: 45px;
+        padding: 5px 0;
+    }
+    
+    .logo-container {
+        max-width: calc(100% - 50px);
+    }
+    
+    .logo-text h1 {
+        font-size: 0.85rem;
+    }
+    
+    .slogan {
+        font-size: 0.65rem;
     }
     
     .hero-content h2 {
@@ -748,19 +755,20 @@ footer {
     }
     
     .header-content {
-        min-height: 60px;
+        min-height: 40px;
     }
     
     .logo-container {
-        gap: 12px;
+        gap: 8px;
+        max-width: calc(100% - 45px);
     }
     
     .logo-text h1 {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
     
     .slogan {
-        font-size: 0.7rem;
+        font-size: 0.6rem;
     }
     
     .hero-banner {
@@ -787,5 +795,19 @@ footer {
     
     .video-placeholder {
         height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text h1 {
+        font-size: 0.75rem;
+    }
+    
+    .slogan {
+        font-size: 0.55rem;
+    }
+    
+    .logo-animated {
+        --size: 35px;
     }
 }
